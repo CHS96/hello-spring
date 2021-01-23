@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository //스프링에서 이 클래스를 repository 라고 인식하고 등록해줌
+//@Repository //스프링에서 이 클래스를 repository 라고 인식하고 등록해줌
 public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();
