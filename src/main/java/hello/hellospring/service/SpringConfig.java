@@ -1,23 +1,29 @@
 package hello.hellospring.service;
 
-import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
 
 //컴포넌트 스캔말고 직접 자바 코드로 스프링에 등록
 //다만 Controller는 안됨
 @Configuration
 public class SpringConfig {
 
-    private final DataSource dataSource;
+    private EntityManager em;
 
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    @Autowired
+    public SpringConfig(EntityManager em) {
+        this.em = em;
     }
+//    private final DataSource dataSource;
+//
+//    public SpringConfig(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
 
     @Bean
     public MemberService memberService() {
@@ -30,6 +36,7 @@ public class SpringConfig {
     @Bean
     public MemberRepository memberRepository() {
 // return new MemoryMemberRepository();
-        return new JdbcMemberRepository(dataSource);
+//        return new JdbcMemberRepository(dataSource);
+        return new JpaMemberRepository(em);
     }
 }
